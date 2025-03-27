@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction | EduGuard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard_prediction.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <h1 class="logo">EduGuard</h1>
+        <ul>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </nav>
+    
+    <div class="prediction-container">
+        <h2>Financial Aid Prediction for {{ student.name }}</h2>
+        <div class="prediction-result">
+            <p><strong>Predicted Aid Eligibility:</strong> 
+                {% if prediction and prediction != "Gemini response was empty." and not prediction.startswith("Error during Gemini prediction:") %}
+                    {{ prediction }}
+                {% else %}
+                    Prediction Unavailable - Check EduGuard Master Analysis
+                {% endif %}
+            </p>
+        </div>
+        
+        <div class="edu-master">
+            <h3>EduGuard Master Analysis & Recommendations</h3>
+            <p><strong>Situation Analysis:</strong> Based on {{ student.name }}'s financial background and academic performance, EduGuard Master suggests that {{ student.name }} is 
+                <span class="highlight">
+                    {% if prediction and prediction != "Gemini response was empty." and not prediction.startswith("Error during Gemini prediction:") %}
+                        {{ prediction }}
+                    {% else %}
+                        Under Review for Financial Aid
+                    {% endif %}
+                </span> for financial aid.
+            </p>
+            
+            <h4>How to Improve:</h4>
+            <ul>
+                <li>Enroll in government or NGO-funded scholarships to ease financial burdens.</li>
+                <li>Consider free online learning platforms to supplement education.</li>
+                <li>Explore part-time learning programs for additional support.</li>
+                <li>Seek mentorship and guidance from educational support organizations.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
